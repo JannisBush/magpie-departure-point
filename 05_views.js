@@ -118,3 +118,30 @@ const forced_choice_2A = magpieViews.view_generator("forced_choice", {
 // There are many more templates available:
 // forced_choice, slider_rating, dropdown_choice, testbox_input, rating_scale, image_selection, sentence_choice,
 // key_press, self_paced_reading and self_paced_reading_rating_scale
+
+const multi_slider = magpieViews.view_generator("slider_rating", {
+	trials: 2,
+	name: 'multi_slider',
+	data: [
+		{
+			question: "please answer this question",
+			optionLeft: "op1",
+			optionRight: "op2",
+			optionLeft1: "op11",
+			optionRight1: "op22"
+		
+		},
+		{
+			question: "answer",
+			optionLeft: "op1",
+			optionRight: "op2",
+			optionLeft1: "op11",
+			optionRight1: "op22"
+		}	
+	]
+	},
+	{
+		answer_container_generator: multi_slider_gen,
+		handle_response_function: multi_slider_rating
+	}
+);

@@ -68,3 +68,55 @@ check_response = function(data, next) {
 *
 *
 */
+
+const multi_slider_gen = function(config, CT) {
+	const option1 = config.data[CT].optionLeft;
+        const option2 = config.data[CT].optionRight;
+	const option11 = config.data[CT].optionLeft1;
+        const option22 = config.data[CT].optionRight1;
+        return `<p class='magpie-view-question'>${config.data[CT].question}</p>
+                <div class='magpie-view-answer-container'>
+                    <span class='magpie-response-slider-option'>${option1}</span>
+                    <input type='range' id='response' class='magpie-response-slider' min='0' max='100' value='50'/>
+                    <span class='magpie-response-slider-option'>${option2}</span>   
+                </div>
+		<div class='magpie-view-answer-container'>
+		    <span class='magpie-response-slider-option'>${option11}</span>
+                    <input type='range' id='response2' class='magpie-response-slider' min='0' max='100' value='50'/>
+                    <span class='magpie-response-slider-option'>${option22}</span>
+                </div>
+                <button id="next" class='magpie-view-button magpie-nodisplay'>Next</button>`;
+}
+
+const multi_slider_rating = function(config, CT, magpie, answer_container_generator, startingTime){
+        let response;
+
+        $(".magpie-view").append(answer_container_generator(config, CT));
+
+        response1 = $("#response");
+        response = $("#response2");
+        // checks if the slider has been changed
+        response.on("change", function() {
+            $("#next").removeClass("magpie-nodisplay");
+        });
+        response.on("click", function() {
+            $("#next").removeClass("magpie-nodisplay");
+        });
+
+        $("#next").on("click", function() {
+            const RT = Date.now() - startingTime; // measure RT before anything else
+            let trial_data = {
+                trial_name: config.name,
+                trial_number: CT + 1,
+		response1: response1.val(),
+                response2: response.val(),
+                RT: RT
+            };
+
+            trial_data = magpieUtils.view.save_config_trial_data(config.data[CT], trial_data);
+
+            magpie.trial_data.push(trial_data);
+            magpie.findNextView();
+        });
+}
+

@@ -17,7 +17,8 @@ $("document").ready(function() {
         views_seq: [
             intro,
             instructions,
-            forced_choice_2A,
+            //forced_choice_2A,
+	    multi_slider,
             post_test,
             thanks,
         ],
